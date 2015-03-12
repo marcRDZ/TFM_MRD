@@ -6,7 +6,6 @@
 package diaz.rodriguez.sessionbeans;
 
 import diaz.rodriguez.entities.Item;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
