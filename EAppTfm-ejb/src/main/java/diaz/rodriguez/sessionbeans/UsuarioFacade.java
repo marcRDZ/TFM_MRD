@@ -31,8 +31,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         Query query = em.createNamedQuery( "Usuario.findByUsernamePassword", Usuario.class);
         query.setParameter( "u", username );
         query.setParameter( "p", password );
-        res = (Usuario) query.getSingleResult();
+        //res = (Usuario) query.getSingleResult();
+        try{
 
+            res = (Usuario) query.getSingleResult();
+
+        }
+        catch (Exception ex){
+
+            res=null;
+
+        }
         return res;
     }
     
