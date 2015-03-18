@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition template="/WEB-INF/facelets/indextemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"                
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="title">Registro</ui:define>  
+    <ui:define name="content" >
+        <h1><p:outputLabel value="Registro de usuario"/></h1>
+        <p:growl id="growlreg" sticky="true" showDetail="true" life="3000" />
+        <p:panelGrid columns="2">
+            <p:outputLabel value="Nombre:" for="nombre" />
+            <p:inputText id="nombre" value="#{registerManagedBean.usuario.nombre}" title="Nombre" 
+                         required="true" />
+            <p:outputLabel value="Apellidos:" for="apellidos" />
+            <p:inputText id="apellidos" value="#{registerManagedBean.usuario.apellidos}" title="Apellidos" 
+                         required="true" />
+            <p:outputLabel value="Username:" for="username" />
+            <p:inputText id="username" value="#{registerManagedBean.usuario.username}" title="Username" 
+                         required="true" />
+            <p:outputLabel value="Email:" for="email" />
+            <p:inputText id="email" value="#{registerManagedBean.usuario.email}" title="Email" 
+                         required="true"/>
+            <p:outputLabel value="Direccion:" for="direccion" />
+            <p:inputText id="direccion" value="#{registerManagedBean.usuario.direccion}" title="Direccion" 
+                         required="true" />
+            <p:outputLabel value="Telefono:" for="telefono" />
+            <p:inputText id="telefono" value="#{registerManagedBean.usuario.telefono}" title="Telefono" 
+                         required="true" />
+            <p:outputLabel value="Password:" for="password" />
+            <p:password id="password" value="#{registerManagedBean.usuario.password}" title="Password" 
+                        required="true" />
+            <p:outputLabel value="Repassword" for="repassword" />
+            <p:password id="repassword" value="#{registerManagedBean.repassword}" title="RePassword" 
+                        required="true" />
+            <f:facet name="footer">
+                <p:commandButton value="Enviar" update="growlreg" actionListener="#{registerManagedBean.register}"/>
+            </f:facet>
+        </p:panelGrid>           
+    </ui:define>
+</ui:composition>
+
+
+
+

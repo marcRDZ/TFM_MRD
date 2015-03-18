@@ -1,27 +1,41 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <f:view>
-            <h:form>
-                <h1><h:outputText value="Login"/></h1>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="Usuario:" for="user" />
-                    <h:inputText id="user" value="#{loginManagedBean.usuario.username}" title="Usuario"
-                        required="true" requiredMessage="El nombre de usuario es obligatorio."/>
-                    <h:outputLabel value="Contraseña:" for="password"/>
-                    <h:inputSecret id="password" value="#{loginManagedBean.usuario.password}" title="Contraseña"
-                        required="true" requiredMessage="La contraseña es obligatoria."/>
-                    <h:commandButton value="Entrar" action="#{loginManagedBean.login}" />
-                </h:panelGrid>
-            </h:form>
-        </f:view>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">        
 
-    </h:body>
-</html>
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+        <p:panel id="logform" widgetVar="logwidget" rendered="#{!loginManagedBean.loggedIn}">
+            <p:panelGrid columns="1">
+                <p:outputLabel for="user" value="Usuario:" />
+                <p:inputText id="user" value="#{loginManagedBean.usuario.username}" required="true" label="username" />
+
+                <p:outputLabel for="password" value="Password:" />
+                <p:password id="password" value="#{loginManagedBean.usuario.password}" required="true" label="password" />
+
+                <f:facet name="footer">
+                    <p:commandButton value="Login" update="growl" actionListener="#{loginManagedBean.login}"
+                                     oncomplete="handleLoginRequest(xhr, status, args)" />
+                </f:facet> 
+            </p:panelGrid>
+            <p:panelGrid columns="2" rendered="#{loginManagedBean.loggedIn}">
+                <p:outputLabel value="Hola" for="#{loginManagedBean.usuario.nombre}" />
+                <p:graphicImage name="/resources/img/cart.png" alt="carrito" title="compra"/>
+            </p:panelGrid>            
+        </p:panel>
+
+    <script type="text/javascript">
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('logwidget').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('logwidget').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
+    </script>
+</ui:composition>
 

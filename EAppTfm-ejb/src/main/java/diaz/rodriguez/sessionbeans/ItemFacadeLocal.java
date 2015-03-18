@@ -6,7 +6,6 @@
 package diaz.rodriguez.sessionbeans;
 
 import diaz.rodriguez.entities.Item;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -17,9 +16,9 @@ import javax.ejb.Local;
 @Local
 public interface ItemFacadeLocal {
 
-    void create(Item item);
+    Item create(Item item);
 
-    void edit(Item item);
+    Item edit(Item item);
 
     void remove(Item item);
 

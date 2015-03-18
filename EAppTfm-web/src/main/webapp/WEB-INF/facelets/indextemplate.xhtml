@@ -2,38 +2,50 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet name="./css/default.css"/>
         <h:outputStylesheet name="./css/cssLayout.css"/>
-        <title>Facelets Template</title>
+        <title><ui:insert name="title">Titulo</ui:insert></title>        
     </h:head>
 
     <h:body>
-
-        <div id="top">
-            <ui:insert name="top">Top</ui:insert>
-        </div>
-        <div>
-            <div id="left">
-                <ui:insert name="left">Left</ui:insert>
-            </div>
-            <div>
-                <div id="right">
-                    <ui:insert name="righttop">RightTop</ui:insert>
-                    <ui:insert name="rightbottom">RightBottom</ui:insert>
-                </div>
-                <div id="content" class="right_content">
-                    <ui:insert name="content">Content</ui:insert>
-                </div>
-            </div>
-        </div>
-        <div id="bottom">
-            <ui:insert name="bottom">Bottom</ui:insert>
-        </div>
-
+        <p:layout fullPage="true">
+            <p:layoutUnit id="top" position="north">                    
+                <h:form>
+                    <p:tabMenu>
+                        <p:menuitem value="Inicio" action="/index.xhtml" icon="" />                     
+                        <p:menuitem value="Pedido" action="/cart.xhtml" icon=""/>
+                        <p:menuitem value="Contacto" action="contact.xhtml" icon=""/>
+                        <p:menuitem value="Registrarse" action="/register.xhtml" icon=""/>               
+                    </p:tabMenu>                     
+                </h:form>                    
+            </p:layoutUnit>
+            <p:layoutUnit id="left" position="west">                    
+                    <h:form>
+                        <p:menu toggleable="true">
+                            <p:submenu label="Productos">
+                                <p:menuitem value="Entrantes" icon=""/>
+                                <p:menuitem value="Carnes" icon=""/>
+                                <p:menuitem value="Pescados" icon=""/>
+                                <p:menuitem value="Postres" icon=""/>
+                            </p:submenu>
+                            </p:menu>
+                        <ui:include src="/login.xhtml"/>                    
+                    </h:form>
+            </p:layoutUnit>      
+            <p:layoutUnit id="center" position="center" size="200">
+                <h:form>
+                    <ui:insert name="content">Content</ui:insert>                    
+                </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit id="bottom" position="south" size="50">
+                <ui:insert name="bottom">Bottom</ui:insert>
+            </p:layoutUnit>
+        </p:layout>      
     </h:body>
 
 </html>

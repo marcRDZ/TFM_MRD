@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -24,30 +26,45 @@ import javax.faces.context.FacesContext;
 public class LoginManagedBean {
     @EJB
     private UsuarioFacadeLocal usuarioFacade;
-
     private FacesContext fContext;
     private Usuario usuario;
-    
+    private boolean loggedIn = false;
+
     public LoginManagedBean() {
       
         fContext = FacesContext.getCurrentInstance();
         usuario = new Usuario();
     }
+    
     public Usuario getUsuario() {
         return usuario;
     }
+
+    public boolean isLoggedIn() {
+        return loggedIn;
+    }   
     
-    public String login() {
-        String res = "OK";
+    public void login(ActionEvent event) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage message = null;
         Usuario u = usuarioFacade.getUsuarioUsernamePassword(usuario.getUsername(), usuario.getPassword());
-        if ( u == null ) {
-            fContext.addMessage( null,
-                new FacesMessage( FacesMessage.SEVERITY_INFO, "Error", "No existe un usuario con esa contraseña" ) );
-            res = "ERROR";
-        }
-        else {
+
+        if(u == null) {
+            loggedIn = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+        } else {
+            loggedIn = true;
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", u.getNombre());
             fContext.getExternalContext().getSessionMap().put( "usuario", u);
+
         }
-        return res;
+         
+        FacesContext.getCurrentInstance().addMessage(null, message);
+        context.addCallbackParam("loggedIn", loggedIn);
+    }       
+   
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "index?faces-redirect=true";
     }
 }

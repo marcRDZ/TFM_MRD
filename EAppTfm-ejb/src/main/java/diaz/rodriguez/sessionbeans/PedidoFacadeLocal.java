@@ -13,9 +13,9 @@ import javax.ejb.Local;
 @Local
 public interface PedidoFacadeLocal {
 
-    void create(Pedido pedido);
+    Pedido create(Pedido pedido);
 
-    void edit(Pedido pedido);
+    Pedido edit(Pedido pedido);
 
     void remove(Pedido pedido);
 
