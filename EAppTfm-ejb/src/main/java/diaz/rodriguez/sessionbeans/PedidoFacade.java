@@ -15,7 +15,7 @@ import javax.persistence.Query;
 
 @Stateless
 public class PedidoFacade extends AbstractFacade<Pedido> implements PedidoFacadeLocal {
-    @PersistenceContext(unitName = "diaz.rodriguez_EAppTfm-ejb_ejb_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "EappTfm")
     private EntityManager em;
 
     @Override
@@ -45,6 +45,11 @@ public class PedidoFacade extends AbstractFacade<Pedido> implements PedidoFacade
         res = query.getResultList();
 
         return res;
+    }
+
+    @Override
+    public List<Pedido> findAll() {
+        return em.createNamedQuery("Pedido.findAll", Pedido.class).getResultList();
     }
     
 }

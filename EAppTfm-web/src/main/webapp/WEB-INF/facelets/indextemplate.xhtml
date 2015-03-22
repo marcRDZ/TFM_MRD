@@ -17,30 +17,23 @@
             <p:layoutUnit id="top" position="north">                    
                 <h:form>
                     <p:tabMenu>
-                        <p:menuitem value="Inicio" action="/index.xhtml" icon="" />                     
+                        <p:menuitem value="Inicio" action="/index.xhtml" icon="" />                      
+                        <p:menuitem value="Tienda" action="/store.xhtml" icon=""/>                 
                         <p:menuitem value="Pedido" action="/cart.xhtml" icon=""/>
                         <p:menuitem value="Contacto" action="contact.xhtml" icon=""/>
                         <p:menuitem value="Registrarse" action="/register.xhtml" icon=""/>               
                     </p:tabMenu>                     
                 </h:form>                    
-            </p:layoutUnit>
-            <p:layoutUnit id="left" position="west">                    
-                    <h:form>
-                        <p:menu toggleable="true">
-                            <p:submenu label="Productos">
-                                <p:menuitem value="Entrantes" icon=""/>
-                                <p:menuitem value="Carnes" icon=""/>
-                                <p:menuitem value="Pescados" icon=""/>
-                                <p:menuitem value="Postres" icon=""/>
-                            </p:submenu>
-                            </p:menu>
-                        <ui:include src="/login.xhtml"/>                    
-                    </h:form>
             </p:layoutUnit>      
             <p:layoutUnit id="center" position="center" size="200">
                 <h:form>
                     <ui:insert name="content">Content</ui:insert>                    
                 </h:form>
+            </p:layoutUnit>
+            <p:layoutUnit id="right" position="east">                    
+                    <h:form>
+                        <ui:include src="/login.xhtml"/>                    
+                    </h:form>
             </p:layoutUnit>
             <p:layoutUnit id="bottom" position="south" size="50">
                 <ui:insert name="bottom">Bottom</ui:insert>

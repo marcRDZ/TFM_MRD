@@ -20,7 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
-@NamedQueries({ @NamedQuery(name = "Pedido.findByUser", query ="select o from Pedido o where o.usuario=:u"),
+@NamedQueries({ @NamedQuery(name = "Pedido.findAll", query ="select o from Pedido o"),
+                @NamedQuery(name = "Pedido.findByUser", query ="select o from Pedido o where o.usuario=:u"),
                 @NamedQuery(name = "Pedido.findByDate", query ="select o from Pedido o where o.fechaPedido=:f")})
 @Entity
 public class Pedido implements Serializable {

@@ -2,10 +2,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
 <ui:composition template="/WEB-INF/facelets/indextemplate.xhtml"                
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:define name="title">Tienda</ui:define>  
     <ui:define name="content" >
-        Tienda
+        <f:view>
+            <p:dataList id="results" value="#{storeView.resultList}" var="item" type="definition">
+            <f:facet name="header">
+                <p:menubar >
+                    <p:submenu label="Productos" >
+                        <p:menuitem value="Entrantes" icon="" 
+                                    update="results" actionListener="#{storeView.findByCategory('Entrante')}">    	
+                        </p:menuitem>
+                        <p:menuitem value="Carnes" icon=""
+                                    update="results" actionListener="#{storeView.findByCategory(' Carne ')}">   	
+                        </p:menuitem>
+                        <p:menuitem value="Pescados" icon=""
+                                    update="results" actionListener="#{storeView.findByCategory(' Pescado')}">           	
+                        </p:menuitem>
+                        <p:menuitem value="Postres" icon=""
+                                    update="results" actionListener="#{storeView.findByCategory(' Postre ')}">             	
+                        </p:menuitem>
+                    </p:submenu>
+                    <f:facet name="options">                        
+                        <p:inputText style="margin-right:10px" placeholder="Buscar" value="#{storeView.sTerm}"/>
+                        <p:commandButton type="button" value="Buscar" icon=""
+                                          update="results" actionListener="#{storeView.findByName}"/>
+                        <p:commandButton type="button" value="A/Z" icon="" 
+                                      update="results" actionListener="#{storeView.azSort}"/>
+                        <p:commandButton type="button" value="+/-" icon=""
+                                      update="results" actionListener="#{storeView.nSort}"/>
+                    </f:facet>
+                </p:menubar>               
+            </f:facet>
+                    <p:panelGrid columns="3">
+                        <p:outputLabel value="#{item.nombre}" />
+                        <p:outputLabel value="#{item.categoria}" />
+                        <p:outputLabel value="#{item.precio}"/>                   
+                    </p:panelGrid>        
+            <f:facet name="description">               
+                <h:outputText value="#{item.descripcion}"/>
+                <p:commandButton type="button" value="Al Carro"/>
+                <p:commandButton type="button" value="A Caja" icon=""/>           
+            </f:facet>
+        </p:dataList>    
+        </f:view>
     </ui:define>
 </ui:composition>
 

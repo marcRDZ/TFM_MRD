@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class ItemFacade extends AbstractFacade<Item> implements ItemFacadeLocal {
-    @PersistenceContext(unitName = "diaz.rodriguez_EAppTfm-ejb_ejb_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "EappTfm")
     private EntityManager em;
 
     @Override
@@ -31,10 +31,15 @@ public class ItemFacade extends AbstractFacade<Item> implements ItemFacadeLocal 
     }
 
     @Override
+    public List<Item> findAll() {
+        return em.createNamedQuery("Item.findAll", Item.class).getResultList();
+    }
+    
+    @Override
     public List<Item> findByName(String name) {
         List<Item> res = null;
         Query query = em.createNamedQuery( "Item.findByName", Item.class);
-        query.setParameter( "u", name);
+        query.setParameter( "n", name);
         res = query.getResultList();
 
         return res;    
@@ -44,7 +49,7 @@ public class ItemFacade extends AbstractFacade<Item> implements ItemFacadeLocal 
     public List<Item> findByCategory(String category) {
         List<Item> res = null;
         Query query = em.createNamedQuery( "Item.findByCategory", Item.class);
-        query.setParameter( "u", category);
+        query.setParameter( "c", category);
         res = query.getResultList();
 
         return res;      

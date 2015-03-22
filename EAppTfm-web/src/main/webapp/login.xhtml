@@ -6,7 +6,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">        
 
-        <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+        <p:growl id="growl" showDetail="true" life="1500" />
         <p:panel id="logform" widgetVar="logwidget" rendered="#{!loginManagedBean.loggedIn}">
             <p:panelGrid columns="1">
                 <p:outputLabel for="user" value="Usuario:" />
@@ -16,12 +16,12 @@
                 <p:password id="password" value="#{loginManagedBean.usuario.password}" required="true" label="password" />
 
                 <f:facet name="footer">
-                    <p:commandButton value="Login" update="growl" actionListener="#{loginManagedBean.login}"
+                    <p:commandButton value="Login" update="@form" actionListener="#{loginManagedBean.login}"
                                      oncomplete="handleLoginRequest(xhr, status, args)" />
                 </f:facet> 
             </p:panelGrid>
             <p:panelGrid columns="2" rendered="#{loginManagedBean.loggedIn}">
-                <p:outputLabel value="Hola" for="#{loginManagedBean.usuario.nombre}" />
+                <p:outputLabel value="Hola #{loginManagedBean.usuario.nombre}" />
                 <p:graphicImage name="/resources/img/cart.png" alt="carrito" title="compra"/>
             </p:panelGrid>            
         </p:panel>

@@ -17,7 +17,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
-@NamedQueries({ @NamedQuery(name = "Usuario.findByUsernamePassword",
+@NamedQueries({ @NamedQuery(name = "Usuario.findAll",query ="select o from Usuario o"),
+                @NamedQuery(name = "Usuario.findByUsernamePassword",
                             query ="select o from Usuario o where o.username=:u and o.password=:p") })
 @Entity
 public class Usuario implements Serializable {

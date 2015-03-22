@@ -7,11 +7,11 @@ package diaz.rodriguez.managedbeans;
 
 import diaz.rodriguez.entities.Usuario;
 import diaz.rodriguez.sessionbeans.UsuarioFacadeLocal;
+import javax.inject.Named;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Named;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
@@ -28,7 +28,7 @@ public class LoginManagedBean {
     private UsuarioFacadeLocal usuarioFacade;
     private FacesContext fContext;
     private Usuario usuario;
-    private boolean loggedIn = false;
+    private boolean loggedIn;
 
     public LoginManagedBean() {
       
@@ -61,10 +61,10 @@ public class LoginManagedBean {
          
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
-    }       
-   
+    }
+    
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index?faces-redirect=true";
-    }
+    } 
 }
