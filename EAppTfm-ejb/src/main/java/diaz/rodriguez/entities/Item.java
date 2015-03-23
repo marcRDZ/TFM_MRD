@@ -18,7 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 @NamedQueries({ @NamedQuery(name = "Item.findAll", query ="select o from Item o"),
-                @NamedQuery(name = "Item.findByName", query ="select o from Item o where o.nombre like 'n%'"),
+                @NamedQuery(name = "Item.findByName", query ="select o from Item o where o.nombre like :n"),
                 @NamedQuery(name = "Item.findByCategory", query ="select o from Item o where o.categoria=:c"),
                 @NamedQuery(name = "Item.orderByPriceAsc", query ="select o from Item o order by o.precio asc"),
                 @NamedQuery(name = "Item.orderByPriceDesc", query ="select o from Item o order by o.precio desc"),

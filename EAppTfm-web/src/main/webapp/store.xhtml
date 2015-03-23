@@ -11,7 +11,7 @@
         <f:view>
             <p:dataList id="results" value="#{storeView.resultList}" var="item" type="definition">
             <f:facet name="header">
-                <p:menubar >
+                <p:menubar style="margin-right:10px">
                     <p:submenu label="Productos" >
                         <p:menuitem value="Entrantes" icon="" 
                                     update="results" actionListener="#{storeView.findByCategory('Entrante')}">    	
@@ -26,15 +26,15 @@
                                     update="results" actionListener="#{storeView.findByCategory(' Postre ')}">             	
                         </p:menuitem>
                     </p:submenu>
-                    <f:facet name="options">                        
-                        <p:inputText style="margin-right:10px" placeholder="Buscar" value="#{storeView.sTerm}"/>
-                        <p:commandButton type="button" value="Buscar" icon=""
-                                          update="results" actionListener="#{storeView.findByName}"/>
-                        <p:commandButton type="button" value="A/Z" icon="" 
+                    <p:menuitem value="A/Z" icon="" 
                                       update="results" actionListener="#{storeView.azSort}"/>
-                        <p:commandButton type="button" value="+/-" icon=""
+                    <p:menuitem value="+/-" icon=""
                                       update="results" actionListener="#{storeView.nSort}"/>
-                    </f:facet>
+                    <p:menuitem>                       
+                        <p:inputText id="sterm" placeholder="Buscar" value="#{storeView.searchTerm}"/>
+                        <p:commandButton value="Buscar" icon=""
+                                          update="results" actionListener="#{storeView.findByName}"/>
+                    </p:menuitem>
                 </p:menubar>               
             </f:facet>
                     <p:panelGrid columns="3">

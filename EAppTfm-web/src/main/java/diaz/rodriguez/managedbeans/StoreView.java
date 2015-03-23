@@ -29,11 +29,12 @@ public class StoreView implements Serializable{
     @EJB
     private ItemFacadeLocal itemFacade;
     private FacesContext fContext;
-    private String azOrder, nOrder, sTerm;
+    private String azOrder, nOrder;   
+    private String searchTerm;
     private Item selectedItem;
     private List<Item> resultList;
     FacesMessage message = null;
-
+   
     public StoreView() {
         
         fContext = FacesContext.getCurrentInstance();
@@ -46,14 +47,14 @@ public class StoreView implements Serializable{
         resultList = findAll();
     }
 
-    public String getsTerm() {
-        return sTerm;
+    public String getSearchTerm() {
+        return searchTerm;
     }
 
-    public void setsTerm(String sTerm) {
-        this.sTerm = sTerm;
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
     }
-
+    
     public Item getSelectedItem() {
         return selectedItem;
     }
@@ -75,7 +76,13 @@ public class StoreView implements Serializable{
     }
     
     public List<Item> findByName(ActionEvent event){
-        resultList = itemFacade.findByName(sTerm);
+        resultList = itemFacade.findByName(searchTerm+"%");
+        if(resultList == null){
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No hay resultados");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+
+        }
+
         return resultList;
     }
     

@@ -39,7 +39,7 @@ public class ItemFacade extends AbstractFacade<Item> implements ItemFacadeLocal 
     public List<Item> findByName(String name) {
         List<Item> res = null;
         Query query = em.createNamedQuery( "Item.findByName", Item.class);
-        query.setParameter( "n", name);
+        query.setParameter("n", name);
         res = query.getResultList();
 
         return res;    
