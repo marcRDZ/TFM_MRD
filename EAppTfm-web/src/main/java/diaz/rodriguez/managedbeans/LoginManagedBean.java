@@ -11,7 +11,6 @@ import javax.inject.Named;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.primefaces.context.RequestContext;
@@ -22,7 +21,6 @@ import org.primefaces.context.RequestContext;
  */
 @Named(value = "loginManagedBean")
 @RequestScoped
-@ManagedBean
 public class LoginManagedBean {
     @EJB
     private UsuarioFacadeLocal usuarioFacade;
@@ -51,10 +49,10 @@ public class LoginManagedBean {
 
         if(u == null) {
             loggedIn = false;
-            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No existe un usuario con esas credenciales");
         } else {
             loggedIn = true;
-            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", u.getNombre());
+            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", u.getNombre());
             fContext.getExternalContext().getSessionMap().put( "usuario", u);
 
         }
