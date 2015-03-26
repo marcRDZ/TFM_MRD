@@ -7,11 +7,12 @@ package diaz.rodriguez.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,10 +35,15 @@ public class Pedido implements Serializable {
     private Date fechaPedido;
     @Column(nullable = false)
     private BigDecimal suma;
-    @ManyToMany(cascade=CascadeType.ALL)
-    private List<Item> pedido;
-    @ManyToOne
+    @ManyToMany
+    private List<Item> compra;
+    @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
+
+    public Pedido() {
+        compra = new ArrayList<>();
+        suma = BigDecimal.ZERO;
+    }
     
     public Long getId() {
         return id;
@@ -59,12 +65,12 @@ public class Pedido implements Serializable {
         this.suma = suma;
     }
 
-    public List<Item> getPedido() {
-        return pedido;
+    public List<Item> getCompra() {
+        return compra;
     }
 
-    public void setPedido(List<Item> pedido) {
-        this.pedido = pedido;
+    public void setCompra(List<Item> compra) {
+        this.compra = compra;
     }
 
     public Usuario getUsuario() {

@@ -1,13 +1,41 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/WEB-INF/facelets/indextemplate.xhtml"
-        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/facelets/indextemplate.xhtml">
     <ui:define name="title">Pedidos</ui:define>  
 
     <ui:define name="content" >
-        Pedidos
+        <f:view>
+            <p:growl id="growlcart" showDetail="true" life="1500" />
+            <p:outputLabel value="No ha añadido nada al carro de momento" rendered="#{pedido == null}"/>
+            <p:dataList id="results" emptyMessage="No hay artículos" rendered="#{pedido != null}"
+                        value="#{cartView.listPedido}" var="aditem" type="definition">
+                    <f:facet name="header">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="#{cartView.pedido.usuario.username}" />
+                            <p:outputLabel value="#{cartView.pedido.fechaPedido}" />              
+                        </p:panelGrid>                 
+                    </f:facet>
+                    <p:panelGrid columns="3">
+                        <p:outputLabel value="#{aditem.nombre}" />
+                        <p:outputLabel value="#{aditem.categoria}" />
+                        <p:outputLabel value="#{aditem.precio}"/> 
+                        <p:outputLabel value="#{aditem.descripcion}"/> 
+                        <p:commandButton value="Quitar" update="@form" action="#{cartManager.removeFromCart}">                                  
+                            <f:setPropertyActionListener target="#{cartManager.selectIt}" value="#{aditem}" />
+                        </p:commandButton>               
+                    </p:panelGrid>   
+                    <f:facet name="footer">
+                        <p:outputLabel value="Total: #{pedido.suma} $" />
+                        <p:commandButton value="Pedir" icon="" update="@form" actionListener="#{cartManager.checkOut}"/>   
+                    </f:facet>
+            </p:dataList> 
+        </f:view>
     </ui:define>
 </ui:composition>
-
+</html>
 

@@ -8,18 +8,17 @@ package diaz.rodriguez.managedbeans;
 import diaz.rodriguez.entities.Usuario;
 import diaz.rodriguez.sessionbeans.UsuarioFacadeLocal;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+import javax.inject.Named;
 
 /**
  *
  * @author mars
  */
-@Named(value = "registerManagedBean")
 @RequestScoped
+@Named(value ="registerManagedBean")
 public class RegisterManagedBean {
     @EJB
     private UsuarioFacadeLocal usuarioFacade;
@@ -44,7 +43,7 @@ public class RegisterManagedBean {
         this.repassword = repassword;
     }
     
-    public String register(ActionEvent event) {
+    public String register() {
         
         String res = validate();
         FacesMessage message = null;
@@ -52,14 +51,16 @@ public class RegisterManagedBean {
         if ( !res.equals( "ERROR" ) ) {
             Usuario u = usuarioFacade.create(usuario);
             if ( u == null ) {
-                context.addMessage( null, new
-                FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "No se ha podido crear el usuario." ) );
-                res = "ERROR";
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "No se ha podido crear el usuario.");
+                res = "register";
             }
             else {
-                context.addMessage(null, new
-                FacesMessage(FacesMessage.SEVERITY_INFO, "OK", "El usuario ha sido creado."));
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "OK", "El usuario ha sido creado.");
+                res = "index";
             }
+            
+            FacesContext.getCurrentInstance().addMessage(null, message);
+
         }
         return res;
     }

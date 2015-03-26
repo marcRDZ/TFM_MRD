@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
-<ui:composition template="/WEB-INF/facelets/indextemplate.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/WEB-INF/facelets/indextemplate.xhtml">
     <ui:define name="content" >
 
         <p:growl id="growlreg" showDetail="true" life="1500" />
@@ -24,7 +24,10 @@
                          required="true" />
             <p:outputLabel value="Email:" for="email" />
             <p:inputText id="email" value="#{registerManagedBean.usuario.email}" title="Email" 
-                         required="true"/>
+                         required="true" validatorMessage="Formato de Email incorrecto"> 
+                <f:validateRegex
+                    pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+            </p:inputText>
             <p:outputLabel value="Direccion:" for="direccion" />
             <p:inputText id="direccion" value="#{registerManagedBean.usuario.direccion}" title="Direccion" 
                          required="true" />
@@ -38,11 +41,11 @@
             <p:password id="repassword" value="#{registerManagedBean.repassword}" title="RePassword" 
                         required="true" />
             <f:facet name="footer">
-                <p:commandButton value="Enviar" update="growlreg" actionListener="#{registerManagedBean.register}"/>
+                <p:commandButton value="Enviar" update="growlreg" action="#{registerManagedBean.register}"/>
             </f:facet>
         </p:panelGrid>           
     </ui:define>
 </ui:composition>
-
+</html>
 
 

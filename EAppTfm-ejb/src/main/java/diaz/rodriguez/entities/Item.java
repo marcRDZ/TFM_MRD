@@ -38,7 +38,7 @@ public class Item implements Serializable {
     private String descripcion;
     @Column(nullable = false)
     private BigDecimal precio;
-    @ManyToMany(mappedBy = "pedido", cascade=CascadeType.ALL)
+    @ManyToMany(mappedBy = "compra", cascade=CascadeType.ALL)
     private List<Pedido> ventas;
 
     public Item() {

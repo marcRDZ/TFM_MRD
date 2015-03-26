@@ -14,15 +14,15 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 
 /**
  *
  * @author mars
  */
-@Named(value = "storeView")
 @ViewScoped
+@Named(value = "storeView")
 public class StoreView implements Serializable{
     @EJB
     private ItemFacadeLocal itemFacade;
@@ -111,6 +111,24 @@ public class StoreView implements Serializable{
             resultList = itemFacade.orderByPriceDesc();
         }    
         return resultList;
+    }
+    
+    public void addItem(){
+        try {           
+            itemFacade.create(selectedItem);
+        } catch (Exception e) {           
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", e.toString()));
+        }
+    } 
+    
+    public void removeItem(){
+        try {           
+            itemFacade.remove(selectedItem);
+        } catch (Exception e) {           
+            FacesContext.getCurrentInstance()
+                    .addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", e.toString()));
+        }
     }
     
 }

@@ -1,29 +1,33 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
-<ui:composition template="/WEB-INF/facelets/indextemplate.xhtml"                
-                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:composition template="/WEB-INF/facelets/indextemplate.xhtml">
     <ui:define name="title">Tienda</ui:define>  
     <ui:define name="content" >
-        <f:view>
             <p:layout>
+            <p:growl id="growlstore" showDetail="true" life="1500" />
                 <p:layoutUnit position="north" collapsible="true" resizable="true">
                     <p:menubar>
                         <p:submenu  label="Productos" >
-                            <p:menuitem value="Entrantes" icon="" 
-                                        update="results" actionListener="#{storeView.findByCategory('Entrante')}">    	
+                            <p:menuitem value="tipo1" icon="" 
+                                        update="results" actionListener="#{storeView.findByCategory('tipo1')}">    	
                             </p:menuitem>
-                            <p:menuitem value="Carnes" icon=""
-                                        update="results" actionListener="#{storeView.findByCategory(' Carne ')}">   	
+                            <p:menuitem value="tipo2" icon=""
+                                        update="results" actionListener="#{storeView.findByCategory('tipo2')}">   	
                             </p:menuitem>
-                            <p:menuitem value="Pescados" icon=""
-                                        update="results" actionListener="#{storeView.findByCategory(' Pescado')}">           	
+                            <p:menuitem value="tipo3" icon=""
+                                        update="results" actionListener="#{storeView.findByCategory('tipo3')}">           	
                             </p:menuitem>
-                            <p:menuitem value="Postres" icon=""
-                                        update="results" actionListener="#{storeView.findByCategory(' Postre ')}">             	
+                            <p:menuitem value="tipo4" icon=""
+                                        update="results" actionListener="#{storeView.findByCategory('tipo4')}">             	
+                            </p:menuitem>
+                            <p:menuitem value="tipo5" icon=""
+                                        update="results" actionListener="#{storeView.findByCategory('tipo5')}">             	
                             </p:menuitem>
                         </p:submenu>
                         <p:menuitem value="A/Z" icon="" 
@@ -35,25 +39,32 @@
                             <p:commandButton value="Buscar" icon=""
                                               update="results" actionListener="#{storeView.findByName}"/>
                         </p:menuitem>
+                        <p:menuitem rendered="#{usuario.administrador}">                       
+                            <p:commandButton value="Añadir" icon=""
+                                             update="results" onclick="PF('addDialog').show()">
+                            </p:commandButton>
+                        </p:menuitem>
                     </p:menubar>  
 
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                         <p:dataList id="results" value="#{storeView.resultList}" var="item" type="definition">
-                                    <p:panelGrid columns="3">
-                                        <p:outputLabel value="#{item.nombre}" />
-                                        <p:outputLabel value="#{item.categoria}" />
-                                        <p:outputLabel value="#{item.precio}"/>                   
-                                    </p:panelGrid>        
-                            <f:facet name="description">               
-                                <h:outputText value="#{item.descripcion}"/>
-                                <p:commandButton type="button" value="Al Carro"/>
-                                <p:commandButton type="button" value="A Caja" icon=""/>           
-                            </f:facet>
+                                <p:panelGrid columns="3">
+                                    <p:outputLabel value="#{item.nombre}" />
+                                    <p:outputLabel value="#{item.categoria}" />
+                                    <p:outputLabel value="#{item.precio}"/> 
+                                    <p:outputLabel value="#{item.descripcion}"/> 
+                                    <p:commandButton value="Al Carro" update="@form" action="#{cartManager.addToCart}">                                       
+                                        <f:setPropertyActionListener target="#{cartManager.selectIt}" value="#{item}" />
+                                    </p:commandButton>  
+                                    <p:commandButton value="Quitar" icon="" rendered="#{usuario.administrador}"
+                                                     update="results" actionListener="#{storeView.removeItem}">
+                                        <f:setPropertyActionListener target="#{storeView.selectedItem}" value="#{item}" />
+                                    </p:commandButton>
+                                </p:panelGrid>        
                         </p:dataList>    
                 </p:layoutUnit>
             </p:layout>
-        </f:view>
     </ui:define>
 </ui:composition>
-
+</html>

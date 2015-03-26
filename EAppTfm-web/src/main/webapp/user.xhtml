@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/facelets/indextemplate.xhtml">
+        <ui:define name="title">Mi Area</ui:define> 
+        <ui:define name="content" >
+            <f:view> 
+                <p:layout rendered="#{usuario != null}">
+                <p:growl id="growlstore" showDetail="true" life="1500" />
+                    <p:layoutUnit position="north" collapsible="true" resizable="true">
+                        <p:panelGrid columns="2">
+                                    <f:facet name="header">
+                                        <p:outputLabel value="#{usuario.username}"/> 
+                                        <p:commandButton value="Editar" update="@form">     
+                                        </p:commandButton> 
+                                    </f:facet>      
+                                        <p:outputLabel value="#{usuario.nombre}" />
+                                        <p:outputLabel value="#{usuario.apellidos}"/>  
+                                        <p:outputLabel value="#{usuario.email}" />
+                                        <p:outputLabel value="#{usuario.telefono}"/>  
+                                        <p:outputLabel value="#{usuario.direccion}"/>       
+                        </p:panelGrid>  
+                    </p:layoutUnit>
+                    <p:layoutUnit position="center">
+                        <p:dataList id="results" value="#{userView.listCompras}" var="compra" type="unordered"
+                                    paginator="true" rows="5">
+                                    <p:panelGrid columns="2">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="#{compra.id}"/> 
+                                        </f:facet>   
+                                        <p:outputLabel value="#{compra.fechaPedido}" />
+                                        <p:outputLabel value="#{compra.suma}"/>            
+                                    </p:panelGrid>        
+                            </p:dataList>    
+                    </p:layoutUnit>
+                </p:layout>
+            </f:view>
+        </ui:define>
+    </ui:composition>
+</html>

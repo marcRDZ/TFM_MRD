@@ -7,20 +7,19 @@ package diaz.rodriguez.managedbeans;
 
 import diaz.rodriguez.entities.Usuario;
 import diaz.rodriguez.sessionbeans.UsuarioFacadeLocal;
-import javax.inject.Named;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
 /**
  *
  * @author mars
  */
-@Named(value = "loginManagedBean")
 @RequestScoped
+@Named(value = "loginManagedBean")
 public class LoginManagedBean {
     @EJB
     private UsuarioFacadeLocal usuarioFacade;
@@ -42,23 +41,26 @@ public class LoginManagedBean {
         return loggedIn;
     }   
     
-    public void login(ActionEvent event) {
+    public String login() {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
+        String res = "index";
         Usuario u = usuarioFacade.getUsuarioUsernamePassword(usuario.getUsername(), usuario.getPassword());
 
         if(u == null) {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "No existe un usuario con esas credenciales");
+            res = "register";
         } else {
             loggedIn = true;
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", u.getNombre());
-            fContext.getExternalContext().getSessionMap().put( "usuario", u);
+            fContext.getExternalContext().getSessionMap().put("usuario", u);
 
         }
          
         FacesContext.getCurrentInstance().addMessage(null, message);
         context.addCallbackParam("loggedIn", loggedIn);
+        return res;
     }
     
     public String logout() {
