@@ -41,12 +41,37 @@
                         </p:menuitem>
                         <p:menuitem rendered="#{usuario.administrador}">                       
                             <p:commandButton value="Añadir" icon=""
-                                             update="results" onclick="PF('addDialog').show()">
-                            </p:commandButton>
+                                             update="results" onclick="PF('addDialog').show()"/>
                         </p:menuitem>
                     </p:menubar>  
-
                 </p:layoutUnit>
+                        <p:dialog header="Añadir Artículo" widgetVar="addDialog" showEffect="blind" hideEffect="explode" resizable="false">        
+                          <p:panelGrid  columns="2" rendered="#{not empty storeView.selectedItem}" columnClasses="label,value">
+                              <h:form>
+                                      <p:outputLabel value="Nombre:" for="nombre" />
+                                      <p:inputText id="nombre" value="#{storeView.selectedItem.nombre}" title="Nombre" 
+                                                   required="true" requiredMessage="Campo necesario"/>
+                                      <p:outputLabel for="tipo" value="Categoría:" />
+                                      <p:selectOneListbox id="tipo" value="#{storeView.selectedItem.categoria}">
+                                          <f:selectItem itemLabel="Tipo 1" itemValue="tipo1" />
+                                          <f:selectItem itemLabel="Tipo 2" itemValue="tipo2" />
+                                          <f:selectItem itemLabel="Tipo 3" itemValue="tipo3" />
+                                          <f:selectItem itemLabel="Tipo 4" itemValue="tipo4" />
+                                          <f:selectItem itemLabel="Tipo 5" itemValue="tipo5" />
+                                      </p:selectOneListbox>                        
+                                      <p:outputLabel value="Descripcion:" for="descripcion" />
+                                      <p:inputTextarea id="descripcion" value="#{storeView.selectedItem.descripcion}" title="Descripcion" 
+                                                   required="true" requiredMessage="Campo necesario"/>
+                                      <p:outputLabel value="Precio:" for="precio" />
+                                      <p:inputText id="precio" value="#{storeView.selectedItem.precio}" title="Precio" placeholder="000.0"
+                                                   required="true" requiredMessage="Campo necesario" converterMessage ="Introduzca un formato de pecio correcto">                   
+                                          <f:convertNumber pattern="#000.0" />
+                                      </p:inputText>
+                                      <p:commandButton value="Añadir" icon="" oncomplete="PF('addDialog').show()"
+                                                       update="@all" actionListener="#{storeView.addItem}"/>
+                                  </h:form>
+                          </p:panelGrid>
+                      </p:dialog>
                 <p:layoutUnit position="center">
                         <p:dataList id="results" value="#{storeView.resultList}" var="item" type="definition">
                                 <p:panelGrid columns="3">
@@ -58,13 +83,14 @@
                                         <f:setPropertyActionListener target="#{cartManager.selectIt}" value="#{item}" />
                                     </p:commandButton>  
                                     <p:commandButton value="Quitar" icon="" rendered="#{usuario.administrador}"
-                                                     update="results" actionListener="#{storeView.removeItem}">
+                                                     update="results" action="#{storeView.removeItem}">
                                         <f:setPropertyActionListener target="#{storeView.selectedItem}" value="#{item}" />
                                     </p:commandButton>
                                 </p:panelGrid>        
                         </p:dataList>    
                 </p:layoutUnit>
-            </p:layout>
+      
+            </p:layout>       
     </ui:define>
 </ui:composition>
 </html>
